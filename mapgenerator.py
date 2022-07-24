@@ -13,13 +13,15 @@ import numpy
 pygame.init()
 
 WIDTH  = 704#256
-HEIGHT = 512#240
+HEIGHT = 576#512#240
 FPS    = 120
 
 YELLOWSAND = (252,216,168)
 WHITE  = (255,255,255)
+BLACK  = (0, 0, 0)
 
 RUN    = True
+FONT = pygame.font.SysFont('Arial',24)
 
 WINDOWS = pygame.display.set_mode((WIDTH,HEIGHT),pygame.RESIZABLE)
 pygame.display.set_caption('TheLegendOfZelda-PythonClone-MapGenerator')
@@ -51,6 +53,12 @@ def Draw_And_Refresh_Window():
     bluecell = pygame.image.load('assets/Sprites/placeholder2.png')
     bluecell = pygame.transform.scale(bluecell, (32, 32))
     WINDOWS.blit(bluecell, ((WIDTH)/2,((HEIGHT)/2) -32))
+
+    pygame.draw.rect(WINDOWS,BLACK,(0,HEIGHT-64,WIDTH,64))
+    hud = FONT.render('←/→ CHANGE TILE COLOR VALUE ||| ↑/↓ CHANGE TYPE OF TILE',1,WHITE)
+    WINDOWS.blit(hud,(8,HEIGHT-64))
+    hud = FONT.render('-/+ CHANGE ASSET TILE VALUE ||| S: SAVE MAP ||| E: CLOSE',1,WHITE)
+    WINDOWS.blit(hud,(8,HEIGHT-32))
 
     IconDraw()
     pygame.display.update()
@@ -98,9 +106,7 @@ def AddToArray(x,y,mstr):
     else: y = int(y/32)
 
     if(type_tile == 0): T[y][x] = (mstr)
-    if(type_tile == 1): T[y][x] = (mstr+str(section_tile))
-    
-    
+    if(type_tile == 1): T[y][x] = (mstr+str(section_tile)) 
 
 #WHEN THE ARRAY2D IS READY THEN PRINT HIM TO A FILE.TXT
 def printArray():
@@ -168,7 +174,7 @@ def KeyListener():
 
         if(keys[pygame.K_PLUS])  : TypeTileManagement(1)
         if(keys[pygame.K_MINUS]) : TypeTileManagement(-1)
-
+        print(section_index,section_tile,type_tile)
         for button in button_list : click(button)
         return
 

@@ -31,7 +31,7 @@ healt_list = []
 
 map_index = 0
 
-#0 = HUD #1 Tile
+#0 = Healt #1 Wall #2 Door
 type_tile = 0 
 
 section_index = 0
@@ -83,7 +83,7 @@ def click(button):
     mstr = ''
     if(button.click()):
         #Check what kind of tile draw in the map
-        #0 = HUD #1 Tile
+        #0 = Healt #1 Wall #2 Door
         if(type_tile == 0): 
             mstr = 'h'
             healtobj = healt.Healt(pos[0],pos[1])
@@ -92,6 +92,11 @@ def click(button):
         if(type_tile == 1):
             mstr = 'w'
             wallobj = wall.Wall(pos[0],pos[1],section_index,mstr+str(section_tile))
+            wall_list.append(wallobj)
+        
+        if(type_tile == 2):
+            mstr = 'd'
+            wallobj = wall.Wall(pos[0],pos[1],section_index,mstr)
             wall_list.append(wallobj)
 
         AddToArray(pos[0],pos[1],mstr)
@@ -105,8 +110,9 @@ def AddToArray(x,y,mstr):
     if(int(y/32) <= 0): y=0
     else: y = int(y/32)
 
-    if(type_tile == 0): T[y][x] = (mstr)
-    if(type_tile == 1): T[y][x] = (mstr+str(section_tile)) 
+    #0 = Healt #1 Wall #2 Door
+    if(type_tile == 1): T[y][x] = (mstr+str(section_tile))
+    else: T[y][x] = (mstr)
 
 #WHEN THE ARRAY2D IS READY THEN PRINT HIM TO A FILE.TXT
 def printArray():
@@ -120,11 +126,14 @@ def printArray():
     
 #ICON THAT APPEAR IN MOUSE POS
 def IconDraw():
+    #0 = Healt #1 Wall #2 Door
     if(type_tile == 0):
         imgicon = pygame.image.load('assets/Sprites/hud/healt_2.png')
     if(type_tile == 1):
         imgicon = pygame.image.load('assets/Sprites/tile/section_'+str(section_index)+'/w'+str(section_tile)+'.png')
-
+    if(type_tile == 2):
+        imgicon = pygame.image.load('assets/Sprites/tile/section_'+str(section_index)+'/d.png')
+        
     imgicon 		  = pygame.transform.scale(imgicon, (32, 32))
     recticon 		  = imgicon.get_rect()
     recticon.topleft = (32, 32)
@@ -152,7 +161,7 @@ def SectionTileManagement(indx):
 def TypeTileManagement(indx):
     global type_tile
     if(indx == 1):#up
-        if(type_tile >= 1): type_tile = 1
+        if(type_tile >= 2): type_tile = 2
         else : type_tile += (indx)
     elif(indx == -1):#down
         if(type_tile <= 0): type_tile = 0

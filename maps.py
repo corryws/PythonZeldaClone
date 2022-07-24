@@ -32,7 +32,6 @@ def ReadMap(map):
             T[i][j] = '  '
 
     file1 = open("Assets/Maps/map0.txt","r")#apro il file esempio1.txt in scrittura/write(w)
-    #open("Assets/Maps/map"+str(map_index)+".txt","w")
     with file1 as file:
         line_array = file.read().splitlines()
         for line in line_array:

@@ -66,11 +66,3 @@ def GenerateMap(T):
 def DrawMap():
      for map_healt in healt_list: map_healt.Draw()
      for map_wall  in wall_list : map_wall.Draw()
-
-
-"""
-if(T[xt][yt] == 'w0' or T[xt][yt] == 'w2' 
-               or T[xt][yt] == 'w3' or T[xt][yt] == 'w4'
-               or T[xt][yt] == 'w5'):
-"""
-

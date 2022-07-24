@@ -27,8 +27,11 @@ pygame.display.set_caption('TheLegendOfZelda-PythonClone-MapGenerator')
 wall_list  = []
 healt_list = []
 
+map_index = 0
+
 #0 = HUD #1 Tile
 type_tile = 0 
+
 section_index = 0
 section_tile  = 0
 
@@ -44,6 +47,11 @@ def Draw_And_Refresh_Window():
     for map_wall  in wall_list   : map_wall.Draw()
     for map_healt in healt_list  : map_healt.Draw()
     for button    in button_list : button  .draw()
+
+    bluecell = pygame.image.load('assets/Sprites/placeholder2.png')
+    bluecell = pygame.transform.scale(bluecell, (32, 32))
+    WINDOWS.blit(bluecell, ((WIDTH)/2,((HEIGHT)/2) -32))
+
     IconDraw()
     pygame.display.update()
     pygame.time.Clock().tick(FPS)
@@ -56,6 +64,7 @@ def drawMapGrid():
         for j in range(cols):#c
             buttonobj = button.Button(WINDOWS,xmap,ymap,cell,32,32)
             button_list.append(buttonobj)
+            if(xmap == WIDTH/2 and ymap == (HEIGHT/2)-32): button_list.remove(buttonobj)
             T[i][j] = '@@'
             ymap += 32
         xmap+=32 ; ymap = 0
@@ -96,7 +105,7 @@ def AddToArray(x,y,mstr):
 #WHEN THE ARRAY2D IS READY THEN PRINT HIM TO A FILE.TXT
 def printArray():
     #apro il file esempio1.txt in scrittura/write(w)
-    file1 = open("map1.txt","w")
+    file1 = open("Assets/Maps/map"+str(map_index)+".txt","w")
     for i in range(rows):
         for j in range(cols):
             file1.write(T[i][j]+'  ')
@@ -116,36 +125,33 @@ def IconDraw():
     WINDOWS.blit(imgicon, pygame.mouse.get_pos())
 
 #CONTROL TILE FUNCTION
-def SectionUp():
+def SectionIndexManagement(indx):
     global section_index
-    if(section_index >= 1): section_index = 1
-    else : section_index += 1
+    if(indx == 1):#up
+        if(section_index >= 1): section_index = 1
+        else : section_index += (indx)
+    elif(indx == -1):#down
+        if(section_index <= 0): section_index = 0
+        else : section_index += (indx)
 
-def SectionDown():
-    global section_index
-    if(section_index <= 0): section_index = 0
-    else : section_index -= 1
-
-def SectionTileUp():
+def SectionTileManagement(indx):
     global section_tile
-    if(section_tile >= 5): section_tile = 5
-    else : section_tile += 1
+    if(indx == 1):#up
+        if(section_tile >= 5): section_tile = 5
+        else : section_tile += (indx)
+    elif(indx == -1):#down
+        if(section_tile <= 0): section_tile = 0
+        else : section_tile += (indx)
 
-def SectionTileDown():
-    global section_tile
-    if(section_tile <= 0): section_tile = 0
-    else : section_tile -= 1
-
-def TypeTileDown():
+def TypeTileManagement(indx):
     global type_tile
-    if(type_tile <= 0): type_tile = 0
-    else : type_tile -= 1
-
-def TypeTileUp():
-    global type_tile
-    if(type_tile >= 1): type_tile = 1
-    else : type_tile += 1
-
+    if(indx == 1):#up
+        if(type_tile >= 1): type_tile = 1
+        else : type_tile += (indx)
+    elif(indx == -1):#down
+        if(type_tile <= 0): type_tile = 0
+        else : type_tile += (indx)
+#---------------------------------------------------
 
 def KeyListener():
     for event in  pygame.event.get():
@@ -154,14 +160,14 @@ def KeyListener():
 
         if(keys[pygame.K_s]): printArray()  
 
-        if(keys[pygame.K_RIGHT]): SectionUp() 
-        if(keys[pygame.K_LEFT]): SectionDown() 
+        if(keys[pygame.K_RIGHT]) : SectionIndexManagement(1)
+        if(keys[pygame.K_LEFT])  : SectionIndexManagement(-1)
 
-        if(keys[pygame.K_UP]): SectionTileUp() 
-        if(keys[pygame.K_DOWN]): SectionTileDown() 
+        if(keys[pygame.K_UP])    : SectionTileManagement(1)
+        if(keys[pygame.K_DOWN])  : SectionTileManagement(-1)
 
-        if(keys[pygame.K_PLUS]) : TypeTileUp()
-        if(keys[pygame.K_MINUS]) : TypeTileDown()
+        if(keys[pygame.K_PLUS])  : TypeTileManagement(1)
+        if(keys[pygame.K_MINUS]) : TypeTileManagement(-1)
 
         for button in button_list : click(button)
         return
@@ -172,7 +178,6 @@ def Loop():
     while RUN:
         KeyListener()
         Draw_And_Refresh_Window()
-    while RUN == False: KeyListener()
 #-------------------------------------------------------------
 
 Loop()

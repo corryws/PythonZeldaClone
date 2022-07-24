@@ -21,7 +21,7 @@ WHITE  = (255,255,255)
 BLACK  = (0, 0, 0)
 
 RUN    = True
-FONT = pygame.font.SysFont('Arial',24)
+FONT = pygame.font.SysFont('Arial',20)
 
 WINDOWS = pygame.display.set_mode((WIDTH,HEIGHT),pygame.RESIZABLE)
 pygame.display.set_caption('TheLegendOfZelda-PythonClone-MapGenerator')
@@ -55,9 +55,9 @@ def Draw_And_Refresh_Window():
     WINDOWS.blit(bluecell, ((WIDTH)/2,((HEIGHT)/2) -32))
 
     pygame.draw.rect(WINDOWS,BLACK,(0,HEIGHT-64,WIDTH,64))
-    hud = FONT.render('←/→ CHANGE TILE COLOR VALUE ||| ↑/↓ CHANGE TYPE OF TILE',1,WHITE)
+    hud = FONT.render('←/→ CHNG TILE COLOR VALUE ||| ↑/↓ CHNG TYPE OF TILE ||| a/d CHNG FILE MAP INDEX',1,WHITE)
     WINDOWS.blit(hud,(8,HEIGHT-64))
-    hud = FONT.render('-/+ CHANGE ASSET TILE VALUE ||| S: SAVE MAP ||| E: CLOSE',1,WHITE)
+    hud = FONT.render('w/s CHNG ASSET TILE VALUE ||| S: SAVE MAP ||| E: CLOSE',1,WHITE)
     WINDOWS.blit(hud,(8,HEIGHT-32))
 
     IconDraw()
@@ -166,6 +166,13 @@ def TypeTileManagement(indx):
     elif(indx == -1):#down
         if(type_tile <= 0): type_tile = 0
         else : type_tile += (indx)
+
+def MapFileIndexManagement(indx):
+    global map_index
+    if(indx == 1): map_index += (indx)
+    elif(indx == -1):#down
+        if(map_index <= 0): map_index = 0
+        else : map_index += (indx)
 #---------------------------------------------------
 
 def KeyListener():
@@ -181,9 +188,14 @@ def KeyListener():
         if(keys[pygame.K_UP])    : SectionTileManagement(1)
         if(keys[pygame.K_DOWN])  : SectionTileManagement(-1)
 
-        if(keys[pygame.K_PLUS])  : TypeTileManagement(1)
-        if(keys[pygame.K_MINUS]) : TypeTileManagement(-1)
-        print(section_index,section_tile,type_tile)
+        if(keys[pygame.K_w])     : TypeTileManagement(1)
+        if(keys[pygame.K_s])     : TypeTileManagement(-1)
+
+        if(keys[pygame.K_d])     : MapFileIndexManagement(1)
+        if(keys[pygame.K_a])     : MapFileIndexManagement(-1)
+        
+
+        print(section_index,section_tile,type_tile,map_index)
         for button in button_list : click(button)
         return
 

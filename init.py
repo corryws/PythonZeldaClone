@@ -1,3 +1,4 @@
+from os import remove
 import pygame
 
 import healt
@@ -62,6 +63,11 @@ def GenerateMap(T):
         
         xmap += 32 ; xt += 1
         yt = 0 ; ymap = 0
+
+def RestartMap():
+     #A quanto pare y e x sono invertiti
+   healt_list.clear()
+   wall_list.clear()    
 
 def DrawMap():
      for map_healt in healt_list: map_healt.Draw()

@@ -1,6 +1,7 @@
 import pygame
 import init
 import time
+import maps
 
 class Link:
     def __init__(self):
@@ -38,9 +39,12 @@ class Link:
     def Draw(self): init.WINDOWS.blit(self.img,(self.x,self.y))
 
     def MapBorderCheck(self):
-        if(self.y <= init.hudH)  : self.y = init.hudH
-        if(self.y >= init.HEIGHT): self.y = init.HEIGHT
-        if(self.x <= 0)          : self.x = 0
+        if(self.y <= init.hudH)  :self.y = init.hudH
+        if(self.y >= init.HEIGHT):self.y = init.HEIGHT
+        if(self.x <= 0)          : 
+            self.x = init.WIDTH
+            init.RestartMap()
+            init.GenerateMap(maps.ReadMap(maps.map))
         if(self.x >= init.WIDTH) : self.x = init.WIDTH
 
     def Collider(self,obstacle,name):

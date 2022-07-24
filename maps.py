@@ -1,8 +1,12 @@
+from cmath import sin
 import pygame
 
 import array
+import os.path
 
 rows, cols = (22, 22)
+
+maps_list  = []
 
 #ARRAY MAPP
 map = [
@@ -24,6 +28,16 @@ map = [
     ['w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0']  #15
     ]
 
+def FillMapList():
+    for id in range(100):
+        file_exists = os.path.exists("Assets/Maps/map"+str(id)+".txt")
+        if(file_exists):
+            single_file = open("Assets/Maps/map"+str(id)+".txt")
+            maps_list.append(single_file)
+    
+    for single_file  in maps_list   : print(single_file.read())
+    
+
 def ReadMap(map):
     T = [[0]*cols for _ in range(rows)]
 
@@ -34,8 +48,7 @@ def ReadMap(map):
     file1 = open("Assets/Maps/map0.txt","r")#apro il file esempio1.txt in scrittura/write(w)
     with file1 as file:
         line_array = file.read().splitlines()
-        for line in line_array:
-            print(line.split()) 
+        #for line in line_array: print(line.split()) 
         T = [line.split() for line in line_array]
         #print(T)
     return T

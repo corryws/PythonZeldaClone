@@ -44,9 +44,9 @@ class Link:
             init.RestartMap()
             init.GenerateMap(maps.ReadMap(maps.map,1))
         if(self.y >= init.HEIGHT):
-            self.y = init.hudH
+            self.y = init.HEIGHT-32
             init.RestartMap()
-            init.GenerateMap(maps.ReadMap(maps.map,1))
+            init.GenerateMap(maps.ReadMap(maps.map,2))
         if(self.x <= 0)          :
             self.x = init.WIDTH-32
             init.RestartMap()

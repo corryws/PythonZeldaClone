@@ -16,7 +16,7 @@ pygame.init()
 
 l = Link.Link()
 maps.FillMapList()
-init.GenerateMap(maps.ReadMap(maps.map))
+init.GenerateMap(maps.ReadMap(maps.map,0))
 
 #set FONT
 FONT = pygame.font.SysFont('Nintendo NES Font regular',24)

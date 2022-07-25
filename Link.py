@@ -39,13 +39,24 @@ class Link:
     def Draw(self): init.WINDOWS.blit(self.img,(self.x,self.y))
 
     def MapBorderCheck(self):
-        if(self.y <= init.hudH)  :self.y = init.hudH
-        if(self.y >= init.HEIGHT):self.y = init.HEIGHT
-        if(self.x <= 0)          : 
-            self.x = init.WIDTH
+        if(self.y <= init.hudH)  :
+            self.y = init.HEIGHT 
             init.RestartMap()
-            init.GenerateMap(maps.ReadMap(maps.map))
-        if(self.x >= init.WIDTH) : self.x = init.WIDTH
+            init.GenerateMap(maps.ReadMap(maps.map,1))
+        if(self.y >= init.HEIGHT):
+            self.y = init.hudH
+            init.RestartMap()
+            init.GenerateMap(maps.ReadMap(maps.map,1))
+        if(self.x <= 0)          :
+            self.x = init.WIDTH-32
+            init.RestartMap()
+            init.GenerateMap(maps.ReadMap(maps.map,1))
+        if(self.x >= init.WIDTH) :
+            self.x = 0
+            init.RestartMap()
+            init.GenerateMap(maps.ReadMap(maps.map,0))
+           
+
 
     def Collider(self,obstacle,name):
         ox = obstacle.x ; oy = obstacle.y

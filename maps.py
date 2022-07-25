@@ -38,14 +38,14 @@ def FillMapList():
     for single_file  in maps_list   : print(single_file.read())
     
 
-def ReadMap(map):
+def ReadMap(map,id):
     T = [[0]*cols for _ in range(rows)]
 
     for i in range(rows):#r
         for j in range(cols):#c
             T[i][j] = '  '
 
-    file1 = open("Assets/Maps/map0.txt","r")#apro il file esempio1.txt in scrittura/write(w)
+    file1 = open("Assets/Maps/map"+str(id)+".txt","r")#apro il file esempio1.txt in scrittura/write(w)
     with file1 as file:
         line_array = file.read().splitlines()
         #for line in line_array: print(line.split()) 

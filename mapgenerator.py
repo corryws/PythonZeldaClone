@@ -9,6 +9,7 @@ import wall
 import healt
 import button
 import numpy
+import os.path
 
 pygame.init()
 
@@ -76,6 +77,14 @@ def drawMapGrid():
             T[i][j] = '@@'
             ymap += 32
         xmap+=32 ; ymap = 0
+
+    id = 0 ; global map_index
+    file_exists = os.path.exists("Assets/Maps/map"+str(id)+".txt")
+    while file_exists != False:
+        print(file_exists)
+        map_index = map_index + 1
+        id+=1
+        file_exists = os.path.exists("Assets/Maps/map"+str(id)+".txt")
 
 #DRAW TILE IN THE MAP WHEN CLICK THE BUTTON
 def click(button):

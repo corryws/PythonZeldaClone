@@ -8,9 +8,9 @@ rows, cols = (22, 22)
 
 maps_list  = []
 
-overworldmap = [[2,1,2],
-                [1,0,1],
-                [6,7,8]]
+overworldmap = [[1,0,2],
+                [0,0,2],
+                [1,2,1]]
 
 overworldx = 0
 overworldy = 0

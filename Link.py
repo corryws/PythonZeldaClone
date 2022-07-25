@@ -7,7 +7,7 @@ class Link:
     def __init__(self):
         self.x      = init.WIDTH/2
         self.y      = init.HEIGHT/2
-        self.spd    = 4
+        self.spd    = 10
 
         self.img       = pygame.image.load('assets/Sprites/link/link_down_1.png')
         self.img       = pygame.transform.scale(self.img , (32, 32))
@@ -41,30 +41,25 @@ class Link:
     def MapBorderCheck(self):
         if(self.y <= init.hudH)  :
             self.y = init.HEIGHT-32
-            init.RestartMap()
-            maps.overworldx-=1
-            init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
+            self.MapBorderGenerateMap(-1,0)
             
         if(self.y >= init.HEIGHT):
             self.y = init.hudH
-            init.RestartMap()
-            maps.overworldx+=1
-            init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
+            self.MapBorderGenerateMap(1,0)
             
         if(self.x <= 0)          :
             self.x = init.WIDTH-32
-            init.RestartMap()
-            maps.overworldy-=1
-            init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
+            self.MapBorderGenerateMap(0,-1)
             
         if(self.x >= init.WIDTH) :
             self.x = 0
-            init.RestartMap()
-            maps.overworldy += 1
-            init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
-            
-           
-
+            self.MapBorderGenerateMap(0,1)
+                   
+    def MapBorderGenerateMap(self,addx,addy):
+        maps.overworldy += (addy)
+        maps.overworldx += (addx)
+        init.RestartMap()
+        init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
 
     def Collider(self,obstacle,name):
         ox = obstacle.x ; oy = obstacle.y
@@ -77,10 +72,10 @@ class Link:
         if(name == 'wall' and obstacle.imgtxt != 'd'):
             col = 32
             if(self.x > ox-col and self.x < ox+col and self.y > oy-col and self.y < oy+col):
-                if(self.y == oy-col+self.spd): self.y -= self.spd
-                if(self.y == oy+col-self.spd): self.y += self.spd
-                if(self.x == ox-col+self.spd): self.x -= self.spd
-                if(self.x == ox+col-self.spd): self.x += self.spd
+                if(self.y <= oy-col+self.spd): self.y -= self.spd
+                if(self.y >= oy+col-self.spd): self.y += self.spd
+                if(self.x <= ox-col+self.spd): self.x -= self.spd
+                if(self.x >= ox+col-self.spd): self.x += self.spd
                 
     
     def LifeSystem(self):

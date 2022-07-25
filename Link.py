@@ -34,27 +34,35 @@ class Link:
             time.sleep(0.05)
             self.img  = pygame.image.load('assets/Sprites/link/link_'+str(dir)+'_'+str(self.anim)+'.png')
             self.img  = pygame.transform.scale(self.img , (32, 32))
-            print('X' + str(self.x) + ' Y' + str(self.y))
+            #print('X' + str(self.x) + ' Y' + str(self.y))
 
     def Draw(self): init.WINDOWS.blit(self.img,(self.x,self.y))
 
     def MapBorderCheck(self):
         if(self.y <= init.hudH)  :
-            self.y = init.HEIGHT 
-            init.RestartMap()
-            init.GenerateMap(maps.ReadMap(maps.map,1))
-        if(self.y >= init.HEIGHT):
             self.y = init.HEIGHT-32
             init.RestartMap()
-            init.GenerateMap(maps.ReadMap(maps.map,2))
+            maps.overworldx-=1
+            init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
+            
+        if(self.y >= init.HEIGHT):
+            self.y = init.hudH
+            init.RestartMap()
+            maps.overworldx+=1
+            init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
+            
         if(self.x <= 0)          :
             self.x = init.WIDTH-32
             init.RestartMap()
-            init.GenerateMap(maps.ReadMap(maps.map,1))
+            maps.overworldy-=1
+            init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
+            
         if(self.x >= init.WIDTH) :
             self.x = 0
             init.RestartMap()
-            init.GenerateMap(maps.ReadMap(maps.map,0))
+            maps.overworldy += 1
+            init.GenerateMap(maps.ReadMap(maps.StartMap(maps.overworldx,maps.overworldy)))
+            
            
 
 

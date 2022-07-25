@@ -8,37 +8,47 @@ rows, cols = (22, 22)
 
 maps_list  = []
 
-#ARRAY MAPP
-map = [
-    ['w0','w0','w0','w0','w0','w0','w0','w0','w0','w0',' ',' '  ,'w0','w0','w0','w0','w0','w0','w0','w0','w0','w0'] , #0
-    ['w0','w0','w0','w0','w0','w0','w0','w0','w0','w0',' ',' '  ,'w0','w0','w0','w0','w0','w0','w0','w0','w0','w0'], #1
-    ['w0','w0','w0','w0','w0','w0','w0', 'd','w0','w2',' ',' '  ,'w0','w0','w0','w0','w0','w0','w0','w0','w0','w0'], #2
-    ['w0','w0','w0','w0','w0','w0','w2','  ','  ','  ',' ',' '  ,'w0','w0','w0','w0','w0','w0','w0','w0','w0','w0'], #3
-    ['w0','w0','w0','w0','w0','w0','  ','  ','  ','  ',' ',' '  ,'w0','w0','w0','w0','w0','w0','w0','w0','w0','w0'], #4
-    ['w0','w0','w0','w0','w0','w2','  ','  ','  ','  ',' ',' '  ,'w0','w0','w0','w0','w0','w0','w0','w0','w0','w0'], #5
-    ['w0','w0','w0','w0','w2','  ','  ','  ','  ','  ',' ',' '  ,'w3','w0','w0','w0','w0','w0','w0','w0','w0','w0'], #6
-    ['  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  '], #7
-    ['w1','w5','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','w1','w1'], #8
-    ['w0','w0','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','w0','w0'], #9
-    ['w0','w0','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','w0','w0'], #10
-    ['w0','w0','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','w0','w0'], #11
-    ['w0','w0','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w1','w0','w0'], #12
-    ['w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0'], #13
-    ['w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0'], #14
-    ['w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0','w0']  #15
-    ]
+overworldmap = [[2,1,2],
+                [1,0,1],
+                [6,7,8]]
+
+overworldx = 0
+overworldy = 0
 
 def FillMapList():
-    for id in range(100):
+    global overworldx ; global overworldy
+    id = 0
+    file_exists = os.path.exists("Assets/Maps/map"+str(id)+".txt")
+    while file_exists != False:
         file_exists = os.path.exists("Assets/Maps/map"+str(id)+".txt")
         if(file_exists):
             single_file = open("Assets/Maps/map"+str(id)+".txt")
             maps_list.append(single_file)
+            id+=1
     
-    for single_file  in maps_list   : print(single_file.read())
-    
+    for i in range(len(overworldmap)):#r
+        for j in range(len(overworldmap[0])):#c
+            if(overworldmap[i][j] == 0):
+                overworldx = i
+                overworldy = j
 
-def ReadMap(map,id):
+def StartMap(x,y):
+    global overworldx ; global overworldy
+    colon = len(overworldmap[0])
+    rows  = len(overworldmap)
+    print('prima del controllo ' + str(x) + str(y))
+
+    if(x > colon-1)  : x = colon-1
+    if(x < 0)        : x = 0
+    if(y > rows-1)   : y = rows-1
+    if(y < 0)        : y = 0
+
+    print('dopo del controllo ' + str(x) + str(y))
+    overworldx = x ; overworldy = y
+    
+    return overworldmap[x][y] 
+
+def ReadMap(id):
     T = [[0]*cols for _ in range(rows)]
 
     for i in range(rows):#r
@@ -48,8 +58,6 @@ def ReadMap(map,id):
     file1 = open("Assets/Maps/map"+str(id)+".txt","r")#apro il file esempio1.txt in scrittura/write(w)
     with file1 as file:
         line_array = file.read().splitlines()
-        #for line in line_array: print(line.split()) 
         T = [line.split() for line in line_array]
-        #print(T)
     return T
     

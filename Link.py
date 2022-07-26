@@ -77,6 +77,11 @@ class Link:
             col = 16
             if(self.x >= ox-col and self.x <= ox+col and self.y >= oy-col and self.y <= oy+col
             and self.health < 16 and not obstacle.destroy): self.RupeeSystem() ; obstacle.destroy = True
+        
+        if(name == 'enemy'):
+            col = 32
+            if(self.x >= ox-col and self.x <= ox+col and self.y >= oy-col and self.y <= oy+col
+            and self.health < 16 and not obstacle.destroy): self.RupeeSystem() ; obstacle.destroy = True
 
         if(name == 'wall' and obstacle.imgtxt != 'd'):
             col = 32

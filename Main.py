@@ -72,6 +72,10 @@ def ColliderCheck():
     for singlew in init.wall_list  :  l.Collider(singlew,singlew.name)
     for singler in init.rupee_list :  l.Collider(singler,singler.name)
 
+    for singlee in init.enemy_list : 
+        for singlew in init.wall_list:
+            singlee.Collider(singlew,singlew.name)
+
 #Function that define gameLoop
 def GameLoop():
     while init.RUN:

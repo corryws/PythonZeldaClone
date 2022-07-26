@@ -43,13 +43,9 @@ def DrawHUD():
     lifehud = FONT.render('-LIFE-',1,init.RED)
     init.WINDOWS.blit(lifehud,(init.WIDTH-85,0))
     healtlist = []
-    for i in range(l.health):
-        healtlist.append(l.healthimg)
+    for i in range(l.health): healtlist.append(l.healthimg)
 
-    spacex = init.WIDTH-132
-    countx = spacex
-    county = 16
-    counth = 0
+    spacex = init.WIDTH-132 ; countx = spacex ; county = 16 ; counth = 0
     for singleheart in healtlist:
         init.WINDOWS.blit(singleheart,(countx,county))
         countx += 16 ; counth += 1
@@ -58,22 +54,23 @@ def DrawHUD():
 
     #rupie
     init.WINDOWS.blit(init.rupyimg,(80,0))
-    rupyinfo = FONT.render('x' + str(init.rupy),1,init.WHITE)
+    rupyinfo = FONT.render('x' + str(l.rupie),1,init.WHITE)
     init.WINDOWS.blit(rupyinfo,(96,0))
 
     #key
     init.WINDOWS.blit(init.keyimg,(80,16))
-    keyinfo = FONT.render('x' + str(init.key),1,init.WHITE)
+    keyinfo = FONT.render('x' + str(l.key),1,init.WHITE)
     init.WINDOWS.blit(keyinfo,(96,16))
 
     #bomb
     init.WINDOWS.blit(init.bombimg,(80,32))
-    bombinfo = FONT.render('x' + str(init.bomb),1,init.WHITE)
+    bombinfo = FONT.render('x' + str(l.bomb),1,init.WHITE)
     init.WINDOWS.blit(bombinfo,(96,32))
 
 def ColliderCheck():
-    for singleh in init.healt_list: l.Collider(singleh,singleh.name)
-    for singlew in init.wall_list: l.Collider(singlew,singlew.name)
+    for singleh in init.healt_list :  l.Collider(singleh,singleh.name)
+    for singlew in init.wall_list  :  l.Collider(singlew,singlew.name)
+    for singler in init.rupee_list :  l.Collider(singler,singler.name)
 
 #Function that define gameLoop
 def GameLoop():

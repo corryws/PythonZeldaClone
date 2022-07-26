@@ -16,8 +16,6 @@ class Wall:
         self.img = pygame.transform.scale(self.img , (32, 32))
         self.rect = self.img.get_rect()
         self.rect.center = (init.WIDTH/2,init.HEIGHT/2)
-
-        
     
     def Draw(self):
         if(not self.destroy): init.WINDOWS.blit(self.img,(self.x,self.y))

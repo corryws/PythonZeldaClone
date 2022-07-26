@@ -17,6 +17,10 @@ class Link:
         self.healthimg = pygame.image.load('assets/Sprites/hud/healt_2.png')
         self.healthimg = pygame.transform.scale(self.healthimg , (16, 16))
 
+        self.rupie      = 0
+        self.key        = 0
+        self.bomb       = 0
+
     def KeyListener(self):
         for event in  pygame.event.get():
             #if(event.type == pygame.KEYDOWN): print(pygame.key.name(event.key))
@@ -68,6 +72,11 @@ class Link:
             col = 16
             if(self.x >= ox-col and self.x <= ox+col and self.y >= oy-col and self.y <= oy+col
             and self.health < 16 and not obstacle.destroy): self.LifeSystem() ; obstacle.destroy = True
+        
+        if(name == 'rupee'):
+            col = 16
+            if(self.x >= ox-col and self.x <= ox+col and self.y >= oy-col and self.y <= oy+col
+            and self.health < 16 and not obstacle.destroy): self.RupeeSystem() ; obstacle.destroy = True
 
         if(name == 'wall' and obstacle.imgtxt != 'd'):
             col = 32
@@ -81,3 +90,7 @@ class Link:
     def LifeSystem(self):
         time.sleep(0.09)
         self.health+=1
+    
+    def RupeeSystem(self):
+        time.sleep(0.09)
+        self.rupie +=1

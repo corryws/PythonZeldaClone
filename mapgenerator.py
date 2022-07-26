@@ -135,13 +135,15 @@ def printArray():
     
 #ICON THAT APPEAR IN MOUSE POS
 def IconDraw():
-    #0 = Healt #1 Wall #2 Door
+    #0 = Healt #1 Wall #2 Door #3Enemy
     if(type_tile == 0):
         imgicon = pygame.image.load('assets/Sprites/hud/healt_2.png')
     if(type_tile == 1):
         imgicon = pygame.image.load('assets/Sprites/tile/section_'+str(section_index)+'/w'+str(section_tile)+'.png')
     if(type_tile == 2):
         imgicon = pygame.image.load('assets/Sprites/tile/section_'+str(section_index)+'/d.png')
+    if(type_tile == 3):
+        imgicon = pygame.image.load('assets/Sprites/enemy/e'+str(section_index)+'/0_1.png')
         
     imgicon 		  = pygame.transform.scale(imgicon, (32, 32))
     recticon 		  = imgicon.get_rect()
@@ -170,7 +172,7 @@ def SectionTileManagement(indx):
 def TypeTileManagement(indx):
     global type_tile
     if(indx == 1):#up
-        if(type_tile >= 2): type_tile = 2
+        if(type_tile >= 3): type_tile = 3
         else : type_tile += (indx)
     elif(indx == -1):#down
         if(type_tile <= 0): type_tile = 0

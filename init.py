@@ -86,3 +86,4 @@ def DrawMap():
      for map_enemy in enemy_list : 
         map_enemy.Draw()
         map_enemy.AnimationDirection()
+        map_enemy.MovementPattern()
